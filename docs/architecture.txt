@@ -1,0 +1,52 @@
+floor-and-design/
+├── src/
+│   ├── app/  
+│   │   ├── admin/
+│   │   │   ├── dashboard/page.js        # Stats admin
+│   │   │   ├── produits/page.js         # Produits admin
+│   │   │   ├── ajouter-produit/page.js  # Ajouter produit
+│   │   │   ├── contactes/page.js        # Messages reçus
+│   │   │   └── profil/page.js           # Profil admin
+│   │   ├── mon-espace/
+│   │   │   ├── favoris/page.js          # Produits aimés
+│   │   │   ├── panier/page.js           # Panier
+│   │   │   └── profil/page.js           # Profil utilisateur
+│   │   ├── layout.js                          
+│   │   ├── page.js                      # Page d’accueil "/"       
+│   │   │   produits/
+│   │   │   ├── page.js           
+│   │   │   └── [slug]/page.js           # Détail produit
+│   │   │── la-marque/page.js        
+│   │   └── simulateur-3d/page.js              
+│   │   ├── login/page.js                # Connexion
+│   │   ├── register/page.js             # Inscription
+│   │   └── api/
+│   │       └── auth/
+│   │           ├── login.js
+│   │           ├── register.js
+│   │           └── logout.js
+│   │           └── me.js
+│   │
+│   ├── components/
+│   │   ├── HeaderPublic.js
+│   │   ├── HeaderAdmin.js
+│   │   ├── HeaderMonEspace.js
+│   │   ├── Footer.js
+│   │   └── ProduitCard.js
+│   │
+│   ├── lib/
+│   │   ├── db.js
+│   │   └── auth.js
+│   │
+│   ├── middleware.js                    # Contrôle d’accès admin/user
+│   └── styles/
+│       └── globals.css
+│
+├── public/                              # Images, favicon...
+├── docs/
+│   ├── architecture.mmd                 # 🏗️ Schéma Mermaid global
+│   ├── flow-auth.mmd                    # 🔒 Flow auth & token
+│   └── flow-routes.mmd                  # 🌐 Flow des routes et middleware
+├── .env                                 # Variables env (MONGO_URI, JWT_SECRET...)
+├── package.json
+└── README.md

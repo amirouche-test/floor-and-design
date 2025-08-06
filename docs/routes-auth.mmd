@@ -1,0 +1,18 @@
+---
+config:
+  layout: dagre
+---
+flowchart TD
+    Start["Visiteur tape une URL"] --> CheckAdmin[/"admin/* ?"/]
+    CheckAdmin -- Non --> CheckUser[/"mon-espace/* ?"/]
+    CheckAdmin -- Oui --> IsConnectedAdmin{"Connecté ?"}
+    IsConnectedAdmin -- Non --> RedirectLogin["/login"]
+    IsConnectedAdmin -- Oui --> IsAdminRole{"Role admin ?"}
+    IsAdminRole -- Oui --> AccessAdmin["✅ Accès admin"]
+    IsAdminRole -- Non --> RedirectHome["/"]
+    CheckUser -- Oui --> IsConnectedUser{"Connecté ?"}
+    IsConnectedUser -- Non --> RedirectLogin2["/login"]
+    IsConnectedUser -- Oui --> IsUserRole{"Role user ?"}
+    IsUserRole -- Oui --> AccessUser["✅ Accès mon-espace"]
+    IsUserRole -- Non --> RedirectHome2["/"]
+    CheckUser -- Non --> PublicPage["✅ Pages publiques accessibles"]

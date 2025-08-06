@@ -1,0 +1,18 @@
+graph TD
+    A[Visiteur arrive sur le site] --> B{Est connecté ?}
+
+    B -- Non --> C[Header]
+    C --> C1[S'affiche avec : LA MARQUE, SIMULATEUR 3D, Catégories, Login, Register]
+
+    B -- Oui --> D{Role ?}
+
+    D -- user --> E[Header]
+    E --> E1[S'affiche avec : LA MARQUE, SIMULATEUR 3D, Catégories, Mon Profil, Favoris, Contact, Logout]
+
+    D -- admin --> F{Page admin ?}
+
+    F -- Non (pages publiques) --> G[Header]
+    G --> G1[S'affiche avec : LA MARQUE, SIMULATEUR 3D, Catégories, à doite aller vers admin dashbord (/admin)]
+
+    F -- Oui (/admin/*) --> H[AdminHeader]
+    H --> H1[S'affiche avec : Dashboard, Produits, Ajouter Produit, Contacts, Profil, Logout]

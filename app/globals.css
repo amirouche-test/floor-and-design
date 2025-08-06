@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Cormorant+Garamond:wght@400;600&display=swap'); */
+
+
+@layer utilities {
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+};
+
+/* Toujours afficher la scrollbar verticale */
+html {
+  overflow-y: scroll;
+}
+
+@keyframes fade-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-down {
+  animation: fade-down 0.3s ease-out;
+}
+
