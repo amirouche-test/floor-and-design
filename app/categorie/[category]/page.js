@@ -5,18 +5,35 @@ import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import toast from 'react-hot-toast'
+import { HeartIcon as HeartOutline } from '@heroicons/react/24/outline'
+import { HeartIcon as HeartSolid } from '@heroicons/react/24/solid'
 
 export default function CategoryPage() {
   const params = useParams()
   const category = params.category
 
   const [products, setProducts] = useState([])
+  const [likedProducts, setLikedProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(0)
   const [totalPages, setTotalPages] = useState(1)
 
   const pageSize = 6
 
+  // 🔹 Charger les likes
+  const fetchLikes = async () => {
+    try {
+      const res = await fetch('/api/user/likes')
+      const data = await res.json()
+      if (res.ok) {
+        setLikedProducts(data.likedProducts || [])
+      }
+    } catch (err) {
+      console.error('Erreur récupération likes', err)
+    }
+  }
+
+  // 🔹 Charger les produits
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -26,6 +43,7 @@ export default function CategoryPage() {
         const data = await res.json()
         setProducts(data.products || [])
         setTotalPages(data.totalPages || 1)
+        await fetchLikes()
       } catch (err) {
         toast.error(err.message || 'Une erreur est survenue.')
       } finally {
@@ -34,6 +52,28 @@ export default function CategoryPage() {
     }
     fetchProducts()
   }, [category, page])
+
+  // 🔹 Fonction pour liker/déliker
+  const toggleLike = async (itemId) => {
+    try {
+      const res = await fetch('/api/user/like', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ itemId })
+      })
+      const data = await res.json()
+      toast.success(data.message)
+
+      // Met à jour localement
+      if (likedProducts.includes(itemId)) {
+        setLikedProducts(likedProducts.filter(id => id !== itemId))
+      } else {
+        setLikedProducts([...likedProducts, itemId])
+      }
+    } catch (err) {
+      toast.error("Erreur lors du like")
+    }
+  }
 
   if (!loading && products.length === 0) {
     return (
@@ -52,7 +92,7 @@ export default function CategoryPage() {
         </p>
       </main>
     )
-  }  
+  }
 
   return (
     <main className="min-h-[calc(100vh-70px)] sm:min-h-[calc(100vh-120px)] p-8">
@@ -64,38 +104,57 @@ export default function CategoryPage() {
         Explorez notre sélection exclusive pour la catégorie {category}.
       </p>
 
-      {/* ✅ Liste des produits ou skeleton */}
+      {/* ✅ Liste des produits */}
       <div className="flex justify-center flex-wrap gap-3 md:gap-4 lg:gap-5 min-h-[250px]">
         {loading
           ? [...Array(pageSize)].map((_, idx) => (
               <div
                 key={idx}
-                className="rounded-xl bg-gray-100 shadow animate-pulse w-28 sm:w-30 md:w-34 lg:w-38 xl:w-42 aspect-[4/4.5]"
+                className="rounded bg-gray-100 shadow animate-pulse w-28 sm:w-30 md:w-34 lg:w-38 xl:w-42 aspect-[4/4.5]"
               ></div>
             ))
-          : products.map((product) => (
-              <Link
-                key={product._id}
-                href={`/produits/${product.slug}`}
-                className="group block w-28 h-full sm:w-30 md:w-34 lg:w-38 xl:w-42 bg-white rounded-xl overflow-hidden shadow hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="relative aspect-[4/4.5] overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
+          : products.map((product) => {
+              const isLiked = likedProducts.includes(product._id)
+              return (
+                <div
+                  key={product._id}
+                  className="group block w-28 h-full sm:w-30 md:w-34 lg:w-38 xl:w-42 bg-white rounded overflow-hidden shadow hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative"
+                >
+                  {/* ❤️ Bouton like */}
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      toggleLike(product._id)
+                    }}
+                    className="absolute top-2 right-2 z-10 p-1 rounded-full bg-white/80 hover:bg-white transition"
+                  >
+                    {isLiked ? (
+                      <HeartSolid className="cursor-pointer w-5 h-5 text-red-500" />
+                    ) : (
+                      <HeartOutline className="cursor-pointer w-5 h-5 text-gray-500 hover:text-red-500" />
+                    )}
+                  </button>
+
+                  <Link href={`/produits/${product.slug}`}>
+                    <div className="relative aspect-[4/4.5] overflow-hidden">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="p-1 md:p-2 text-center">
+                      <h3 className="text-gray-800 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base line-clamp-2">
+                        {product.name}
+                      </h3>
+                      <p className="text-gray-700 mt-0.5 text-[10px] sm:text-xs md:text-sm font-medium">
+                        {product.price} DA
+                      </p>
+                    </div>
+                  </Link>
                 </div>
-                <div className="p-1 md:p-2 text-center">
-                  <h3 className="text-gray-800 font-semibold text-[10px] sm:text-xs md:text-sm lg:text-base line-clamp-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-gray-700 mt-0.5 text-[10px] sm:text-xs md:text-sm font-medium">
-                    {product.price} DA
-                  </p>
-                </div>
-              </Link>
-            ))}
+              )
+            })}
       </div>
 
       {/* ✅ Pagination */}

@@ -5,11 +5,13 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Menu, X, User, Heart, MessageCircle } from 'lucide-react'
 import { FiLogOut } from 'react-icons/fi'
+import ContactDrawer from '@/components/ContactDrawer'
 
 export default function Header({ role = 'guest' }) {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [openDrawer, setOpenDrawer] = useState(false)
 
   const isHome = pathname === '/'
   const isTransparent = isHome && !scrolled
@@ -108,9 +110,9 @@ export default function Header({ role = 'guest' }) {
                 <Link href="/mon-espace/favoris" className={navLinkClass('/mon-espace/favoris')}>
                   <Heart className="inline-block mr-1" size={18} /> 
                 </Link>
-                <Link href="/mon-espace/contact" className={navLinkClass('/mon-espace/contact')}>
-                  <MessageCircle className="inline-block mr-1" size={18} /> 
-                </Link>
+                <button className={navLinkClass('/mon-espace/contact')}>
+                  <MessageCircle onClick={() => setOpenDrawer(true)} className="cursor-pointer inline-block mr-1" size={18} /> 
+                </button>
                 <button onClick={handleLogout} className="text-red-500 cursor-pointer group hover:text-red-600">
                   <FiLogOut
                     size={18}
@@ -199,9 +201,9 @@ export default function Header({ role = 'guest' }) {
             <Link href="/mon-espace/favoris" onClick={() => setIsOpen(false)} className="flex items-center gap-1 hover:text-[#5e8a75]">
               <Heart size={18} /> Favoris
             </Link>
-            <Link href="/mon-espace/contact" onClick={() => setIsOpen(false)} className="flex items-center gap-1 hover:text-[#5e8a75]">
+            <button onClick={() => {setIsOpen(false); setOpenDrawer(true)}} className="flex cursor-pointer items-center gap-1 hover:text-[#5e8a75]">
               <MessageCircle size={18} /> Contact
-            </Link>
+            </button>
             <button onClick={handleLogout} className="flex cursor-pointer items-center gap-1 text-red-500 group hover:text-red-600">
               <FiLogOut size={18} className="transition-transform duration-200 group-hover:-rotate-90" />
               Déconnexion
@@ -231,7 +233,7 @@ export default function Header({ role = 'guest' }) {
     </div>
   </div>
 )}
-
+    <ContactDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
     </header>
     {!isHome && <div className="h-[70px] sm:h-[120px]" />}
   </>

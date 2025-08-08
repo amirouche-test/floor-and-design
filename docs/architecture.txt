@@ -5,7 +5,7 @@ floor-and-design/
 │   │   │   ├── dashboard/page.js        # Stats admin
 │   │   │   ├── produits/page.js         # Produits admin
 │   │   │   ├── ajouter-produit/page.js  # Ajouter produit
-│   │   │   ├── contactes/page.js        # Messages reçus
+│   │   │   ├── contacts/page.js         # Messages reçus
 │   │   │   └── profil/page.js           # Profil admin
 │   │   ├── mon-espace/
 │   │   │   ├── favoris/page.js          # Produits aimés

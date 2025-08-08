@@ -1,3 +1,5 @@
+// app/api/user/me
+
 import { cookies } from 'next/headers';
 import { verifyToken } from '@/lib/auth';
 import { connectDB } from '@/lib/db';

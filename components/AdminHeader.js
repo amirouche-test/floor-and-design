@@ -75,7 +75,7 @@ export default function AdminHeader() {
 
         {/* Actions - Desktop */}
         <div className="hidden md:flex items-center gap-4">
-          <Link href="/admin/contactes" title="Messages">
+          <Link href="/admin/contacts" title="Messages">
             <span className="text-green-600 hover:text-green-700">
               <FiMessageCircle size={20} />
             </span>
@@ -104,10 +104,10 @@ export default function AdminHeader() {
           <div className="flex flex-col gap-2">
             {navLink('/admin/produits', 'Produits')}
             {navLink('/admin/ajouter-produit', 'Ajouter Produit')}
-            {navLink('/admin/palette-couleurs', 'Couleurs')}
+            {navLink('/admin/palette-couleurs', 'Palette Couleurs')}
           </div>
           <div className="flex items-center gap-4 pt-4">
-            <Link href="/admin/contactes" title="Messages">
+            <Link href="/admin/contacts" title="Messages">
               <span className="text-green-600 hover:text-green-700">
                 <FiMessageCircle size={20} />
               </span>

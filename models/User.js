@@ -2,19 +2,18 @@
 
 import mongoose from 'mongoose';
 
-// Définition du schéma utilisateur
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true,   // Bon pour éviter les doublons du style "Test@..." et "test@..."
+    lowercase: true,
     trim: true
   },
   password: {
     type: String,
     required: true,
-    minlength: 5       // Petite sécurité de base
+    minlength: 5
   },
   name: {
     type: String,
@@ -26,12 +25,19 @@ const userSchema = new mongoose.Schema({
     enum: ['user', 'admin'],
     default: 'user'
   },
-  image: String,       // URL avatar (avec update profil)
-  phone: String,       // Téléphone (avec update profil)
-  address: String      // Adresse (avec update profil)
+  image: String,
+  phone: String,
+  address: String,
+
+  // ✅ Nouveau champ : tableau des produits likés
+  likedProducts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Product' // nom du modèle Product
+    }
+  ]
 }, {
-  timestamps: true     // createdAt et updatedAt automatiques
+  timestamps: true
 });
 
-// Export du modèle
 export default mongoose.models.User || mongoose.model('User', userSchema);

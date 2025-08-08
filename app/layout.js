@@ -3,6 +3,8 @@ import "./globals.css";
 import { Toaster } from 'react-hot-toast';
 import ServerHeaderWrapper from "@/components/ServerHeaderWrapper";
 import ServerFooterWrapper from "@/components/ServerFooterWrapper";
+import 'react-loading-skeleton/dist/skeleton.css'
+
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });

@@ -126,7 +126,7 @@ export default function ProductDetails({ slug }) {
           <div className="flex gap-8 mt-10 flex-wrap lg:flex-nowrap">
 
             {/* Zone gauche */}
-            <div className="relative w-[450px] h-[471px] mx-auto overflow-hidden rounded-2xl shadow-lg bg-white">
+            <div className="relative w-[450px] h-[471px] mx-auto overflow-hidden rounded shadow bg-white">
               <div className="absolute top-2 right-2 flex space-x-2 z-30">
                 <button onClick={downloadImage} className="p-2 bg-gray-50 cursor-pointer rounded-full border hover:bg-gray-100 transition">
                   <Download size={22} className="text-gray-600" />
@@ -142,11 +142,11 @@ export default function ProductDetails({ slug }) {
                     return motif.calques
                       .filter(c => c.couleur === color)
                       .map((calque, idx) => (
-                        <img key={idx} src={calque.image} alt="" className="absolute top-0 left-0 h-full" style={{ width: 'auto' }} />
+                        <img key={idx} src={calque.image} alt="" className="absolute top-0 left-0 h-full w-full" />
                       ))
                   })}
                 </div>
-                <img src="/Image-prototype-scaled.png" alt="Prototype" className="block w-full h-auto relative z-10" />
+                <img src="/Image-prototype-scaled.png" alt="Prototype" className="block w-full h-full relative z-10" />
               </div>
             </div>
 
