@@ -184,7 +184,7 @@ export default function PaletteCouleursPage() {
               <div
                 key={idx}
                 onClick={() => { setSelectedCouleur(c); setEditNom(c.nom); setEditHex(c.hex) }}
-                className="w-6 h-6 rounded-full border-gray-200 shadow cursor-pointer hover:scale-110 transition"
+                className="w-5 h-5 rounded-full border-gray-200 shadow cursor-pointer hover:scale-110 transition"
                 style={{ backgroundColor: c.hex }}
                 title={c.nom}
               />

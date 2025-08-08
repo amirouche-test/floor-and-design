@@ -153,10 +153,10 @@ export default function ProductDetails({ slug }) {
           {/* ✅ Zone droite */}
           <div className="flex-1 flex flex-col space-y-6 items-end text-right">
             <div className="flex flex-row-reverse items-center gap-4">
-              <img src={product.image} alt={product.name} className="w-24 h-24 object-cover rounded-2xl shadow" />
+              <img src={product.image} alt={product.name} className="w-24 h-24 object-cover rounded shadow" />
               <div>
                 <h2 className="text-2xl font-semibold">{product.name}</h2>
-                <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-sm font-medium text-blue-800 bg-blue-100">
+                <span className="inline-block mt-1 px-2 py-0.5 rounded text-sm font-medium text-blue-800 bg-blue-100">
                   {product.category}
                 </span>
                 <p className="text-gray-700 mt-1 text-lg">💰 {product.price} DA</p>
@@ -168,7 +168,7 @@ export default function ProductDetails({ slug }) {
                   <button
                     key={idx}
                     onClick={() => setSelectedMotif(motif)}
-                    className={`px-4 py-2 text-base rounded-full border transition cursor-pointer ${
+                    className={`px-4 py-1 text-base rounded border transition cursor-pointer ${
                       selectedMotif?.nom === motif.nom
                         ? 'bg-blue-600 text-white shadow'
                         : 'bg-gray-50 hover:bg-gray-100'
@@ -180,7 +180,7 @@ export default function ProductDetails({ slug }) {
               </div>
 
               {selectedMotif && (
-                <div className="w-full max-w-xl h-38 overflow-y-auto flex flex-row-reverse flex-wrap gap-1 rounded-2xl p-3 bg-gray-50 shadow-inner">
+                <div className="w-full max-w-xl h-38 overflow-y-auto flex flex-row-reverse flex-wrap gap-1 rounded px-4 py-1 bg-gray-50 shadow-inner">
                   {selectedMotif.calques.map((calque, idx) => {
                     const paletteColor = palette.find(p => p.nom === calque.couleur)
                     return (
